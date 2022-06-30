@@ -44,6 +44,9 @@ Generated\ Files/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# LocalDevCreations
+__azurite_db_blob*
+
 # NUnit
 *.VisualState.xml
 TestResult.xml

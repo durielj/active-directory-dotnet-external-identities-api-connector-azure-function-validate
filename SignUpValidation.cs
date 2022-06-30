@@ -19,7 +19,7 @@ namespace Sample.ExternalIdentities
             ILogger log)
         {
             // Allowed domains
-            string[] allowedDomain = { "fabrikam.com", "fabricam.com" };
+            string[] allowedDomain = Environment.GetEnvironmentVariable("AllowedDomains").Split(',');
 
             // Check HTTP basic authorization
             if (!Authorize(req, log))
@@ -63,13 +63,13 @@ namespace Sample.ExternalIdentities
             // If displayName claim doesn't exist, or it is too short, show validation error message. So, user can fix the input data.
             if (data.displayName == null || data.displayName.ToString().Length < 5)
             {
-                return (ActionResult)new BadRequestObjectResult(new ResponseContent("ValidationError", "Please provide a Display Name with at least five characters."));
+                return (ActionResult)new OkObjectResult(new ResponseContent("ValidationError", $"Please provide a Display Name with at least five characters. {data.displayName} is not a valid option"));
             }
 
             // Input validation passed successfully, return `Allow` response.
             // TO DO: Configure the claims you want to return
             return (ActionResult)new OkObjectResult(new ResponseContent() { 
-                jobTitle = "This value return by the API Connector"//,
+                jobTitle = "Job Title Provided By Az Function API Connector"//,
                 // You can also return custom claims using extension properties.
                 //extension_CustomClaim = "my custom claim response"
             });
@@ -107,6 +107,7 @@ namespace Sample.ExternalIdentities
 
             // Get the the HTTP basinc authorization credentials
             var cred = System.Text.UTF8Encoding.UTF8.GetString(Convert.FromBase64String(auth.Substring(6))).Split(':');
+            log.LogTrace($"SSSU - User Flow Bearer Auth Token : {auth}");
 
             // Evaluate the credentials and return the result
             return (cred[0] == username && cred[1] == password);
