@@ -1,5 +1,12 @@
 {
     "version": "2.0",
+    "extensions": {
+        "http":{
+            "routePrefix":"api",
+            "maxConcurrentRequests": -1,
+            "maxOutstandingRequests":30
+        }
+    },
     "logging": {
         "applicationInsights": {
             "samplingExcludedTypes": "Request",
