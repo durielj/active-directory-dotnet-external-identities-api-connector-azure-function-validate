@@ -69,9 +69,9 @@ namespace Sample.ExternalIdentities
             // Input validation passed successfully, return `Allow` response.
             // TO DO: Configure the claims you want to return
             return (ActionResult)new OkObjectResult(new ResponseContent() { 
-                jobTitle = "Job Title Provided By Az Function API Connector"//,
+                jobTitle = "Job Title Provided By Az Function API Connector",//,
                 // You can also return custom claims using extension properties.
-                //extension_CustomClaim = "my custom claim response"
+                //extension_CompanyName = "MyCompany"
             });
         }
 
